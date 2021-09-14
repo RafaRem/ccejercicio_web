@@ -1,0 +1,151 @@
+<div class="container">
+    <form [formGroup]="userForm" (submit)="saveUser()">
+        <div class="form-group" >
+            <label for="nombre">Nombre*</label>
+            <input id="nombre" class="form-control" name="nombre" ngModel type="text" formControlName="nombre">
+  
+            <div *ngIf="!userForm.controls['nombre'].valid && (userForm.controls['nombre'].dirty || userForm.controls['nombre'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['nombre'].errors.required">
+                        Por favor ingrese el nombre del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="apaterno">Apellido paterno*</label>
+            <input id="apaterno" class="form-control" name="apaterno" ngModel type="text" formControlName="apaterno">
+  
+            <div *ngIf="!userForm.controls['apaterno'].valid && (userForm.controls['apaterno'].dirty || userForm.controls['apaterno'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['apaterno'].errors.required">
+                        Por favor ingrese el apellido paterno del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="amaterno">Apellido materno</label>
+            <input id="amaterno" class="form-control" name="amaterno" ngModel type="text" formControlName="amaterno">
+        </div>
+        <div class="form-group" >
+            <label for="calle">Calle*</label>
+            <input id="calle" class="form-control" name="calle" ngModel type="text" formControlName="calle">
+  
+            <div *ngIf="!userForm.controls['calle'].valid && (userForm.controls['calle'].dirty || userForm.controls['calle'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['calle'].errors.required">
+                        Por favor ingrese la calle del domicilio del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="numero">Numero*</label>
+            <input id="numero" class="form-control" name="numero" ngModel type="text" formControlName="numero">
+  
+            <div *ngIf="!userForm.controls['numero'].valid && (userForm.controls['numero'].dirty || userForm.controls['numero'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['numero'].errors.required">
+                        Por favor ingrese el número del domicilio del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="colonia">colonia*</label>
+            <input id="colonia" class="form-control" name="colonia" ngModel type="text" formControlName="colonia">
+  
+            <div *ngIf="!userForm.controls['colonia'].valid && (userForm.controls['colonia'].dirty || userForm.controls['colonia'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['colonia'].errors.required">
+                        Por favor ingrese la colonia del domicilio del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="codigopostal">codigopostal*</label>
+            <input id="codigopostal" class="form-control" name="codigopostal" ngModel type="text" formControlName="codigopostal">
+  
+            <div *ngIf="!userForm.controls['codigopostal'].valid && (userForm.controls['codigopostal'].dirty || userForm.controls['codigopostal'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['codigopostal'].errors.required">
+                        Por favor ingrese la codigopostal del domicilio del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="rfc">RFC*</label>
+            <input maxlength="13" id="rfc" class="form-control" name="rfc" ngModel type="text" formControlName="rfc" style="text-transform:uppercase;">
+  
+            <div *ngIf="!userForm.controls['rfc'].valid && (userForm.controls['rfc'].dirty || userForm.controls['rfc'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['rfc'].errors.required">
+                        Por favor ingrese el RFC del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="telefono">telefono*</label>
+            <input maxlength="10" id="telefono" class="form-control" name="telefono" ngModel type="text" formControlName="telefono">
+  
+            <div *ngIf="!userForm.controls['telefono'].valid && (userForm.controls['telefono'].dirty || userForm.controls['telefono'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['telefono'].errors.required">
+                        Por favor ingrese el número telefonico del prospecto
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Nombre del documento*</label>
+            <input id="titulo_doc" class="form-control" name="titulo_doc" [(ngModel)]="titulo_doc" type="text" formControlName="titulo_doc">
+            <div *ngIf="!userForm.controls['titulo_doc'].valid && (userForm.controls['titulo_doc'].dirty || userForm.controls['titulo_doc'].touched)" class="alert alert-danger">
+                <div *ngIf="userForm.controls['titulo_doc'].errors.required">
+                        Por favor ingrese nombre del documento
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="file" id="file" accept="application/pdf"  class="form-control-file" (change)="LoadFile($event)" name="documento" ngModel formControlName="documento" >
+                    <div *ngIf="userForm.controls['documento'].invalid && (userForm.controls['documento'].dirty || userForm.controls['documento'].touched)" class="alert alert-danger">
+                        <div *ngIf="userForm.controls['documento'].errors.required;else btnAgregar">
+                                El documento es requerido.
+                        </div>
+        
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary" (click)="AddFile()"  [disabled]="userForm.controls['documento'].invalid">+</button>
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="list" id="todo">
+            <h3>Archivos del prospecto</h3>
+            <ul *ngFor="let item of archivos; let i = index;" >
+                <li style="list-style-type: none;">{{item.nombre}} <span class="ml-5" ><button type="button" class="btn btn-danger mr-1" (click)="deleteTodo(i)">x</button></span></li>
+          
+            </ul>
+        </div>
+        <div class="text-right mb-5" style="padding-bottom: 15px;">
+            <button  type="button" class="btn btn-danger mr-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Salir
+            </button>
+            <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Registrar</button>
+        </div>
+    </form>
+</div>
+
+  
+  <!-- Modal de confirmación-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Advertencia de salida</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h3>¿Esta seguro de querer abandonar el registro?</h3>
+            <p>Se perderan los datos ingresados</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          
+          <a type="button" href="#" class="btn btn-danger">Si, deseo salir</a>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>

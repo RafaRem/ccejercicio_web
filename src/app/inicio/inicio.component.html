@@ -1,0 +1,103 @@
+<div class="container mt-5">
+
+
+<h3 class="text-center">Listado de prospectos</h3>
+
+<form>
+  <div class="form-group"  style="width:80%;">
+        <label for="name">Buscar prospecto </label>
+        <input [(ngModel)]="textoDeInput"  name="textoDeInput"
+        type="text" 
+        class="form-control" 
+        placeholder="" 
+        aria-label="" 
+        aria-describedby="basic-addon1"
+        (keyup)="applyFilter()">
+  </div>
+</form>
+<form>
+  <div class="form-group"  style="width:80%;">
+        <label for="name">Seleccionar Estado de busqueda </label>
+        <select   class="form-control mt-3"
+          (change)="filtrarEstatus($event.target.value)" >
+          <option value='x'>Todos</option>
+          <option value='e'>Pendientes</option>
+          <option value='a'>Aprovados</option>
+          <option value='r'>Rechazados</option>
+        </select>
+  </div>
+</form>
+
+<br>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Apellido paterno</th>
+    <th scope="col">Apellido materno</th>
+    <th scope="col">Estatus</th>
+    <th scope="col">Observación</th>
+    <th scope="col">Detalles</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let prospecto of allprospectos">
+    <td>{{prospecto.id}}</td>
+    <td>{{prospecto.nombre}}</td>
+    <td>{{prospecto.apaterno}}</td>
+    <td>{{prospecto.amaterno!}}</td>    
+    <div *ngIf="prospecto.estado =='e'">
+        <td><span class="badge bg-warning text-dark" style="font-size: 15px;">Enviado</span></td>
+    </div>
+    <div *ngIf="prospecto.estado =='a'">
+        <td><span class="badge bg-success" style="font-size: 15px;">Aprovado</span></td>
+    </div>
+    <div *ngIf="prospecto.estado =='r'">
+        <td><span class="badge bg-danger" style="font-size: 15px;">Rechazado</span></td>
+    </div>
+    <td>
+    <div *ngIf="prospecto.estado !='r'">
+      <button (click)="textObservacion(prospecto.observacion)" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        ver
+      </button>
+    </div>
+    <div *ngIf="prospecto.estado =='r'">
+      <button (click)="textObservacion(prospecto.observacion)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        ver
+      </button>
+    </div>
+  </td>
+  <td>
+  <div *ngIf="prospecto.estado !='e'">
+    <a (click)="detallesProspecto(prospecto.id)" class="btn btn-success"> Detalles</a>
+  </div>
+  <div *ngIf="prospecto.estado =='e'">
+    <a (click)="detallesProspecto(prospecto.id)" class="btn btn-primary"> Evaluar</a>
+  </div>
+</td>
+  </tr>
+  </tbody>
+</table>
+<div class="alert alert-info" *ngIf="allprospectos.length === 0">No hay prospectos registrados</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Observación de rechazo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{observacin}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+
+<div class="row mt-5" style="margin-left: 10px" >
+    <a href="#" class="btn btn-danger" style="width: auto;"> regresar </a>
+</div>
+<h3 class="text-center mt-3 mb-5">Detalles de prospecto</h3>
+    <div class="container">
+        <br>
+        <div class="row" style="margin-left: 10px" >
+            <label for="">ID: </label>  
+            <input id="folio" placeholder="{{prospecto.id}}" class="form-control" type="text"  readonly>          
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Nombre:</label>
+                <input id="nombre" placeholder=" {{prospecto.nombre}}" class="form-control"  type="text"  readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Apellido paterno: </label>
+                <input id="app" placeholder="{{prospecto.apaterno}}" class="form-control"  type="text"  readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Apellido materno: </label>       
+                <input id="apm" placeholder="{{prospecto.amaterno}}" class="form-control" type="text"  readonly>      
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Calle:</label>
+                <input id="calle" placeholder=" {{prospecto.calle}}" class="form-control"  type="text" readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Número: </label>
+                <input id="numero" placeholder="{{prospecto.numero}}" class="form-control"  type="text" readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Colonia: </label>
+                <input id="colonia" placeholder="{{prospecto.colonia}}" class="form-control"  type="text"  readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Código postal: </label>
+                <input id="cp" placeholder="{{prospecto.codigopostal}}" class="form-control"  type="text"  readonly>             
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Teléfono: </label>
+                <input id="telefono" placeholder="{{prospecto.telefono}}" class="form-control"  type="text" readonly> 
+        </div>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">RFC: </label>
+                <input id="rfc" placeholder="{{prospecto.rfc}}" class="form-control"  type="text"  readonly> 
+        </div>
+        <br>
+        <div class="row" style="margin-left: 10px" >
+                <label for="">Estado: </label>
+                <div *ngIf="prospecto.estado =='e'">
+                    <span class="badge bg-warning text-dark" style="font-size: 15px;">Enviado</span>
+                </div>
+                <div *ngIf="prospecto.estado =='a'">
+                    <span class="badge bg-success" style="font-size: 15px;">Aprovado</span>
+                </div>
+                <div *ngIf="prospecto.estado =='r'">
+                    <span class="badge bg-danger" style="font-size: 15px;">Rechazado</span>
+                </div>
+        </div>
+        <br>
+        <label for="">Documentos </label>.
+        <ul *ngFor="let item of documentos; let i = index;" >
+            <li style="list-style-type: none;"> <a style="margin-left: 10px" target="_blank" href="http://localhost:3005/{{item.ruta}}">{{item.nombre}}</a></li>
+        </ul>
+      
+        <div *ngIf="prospecto.estado =='e'" class="row mb-5" style="margin-left: 10px" >
+                <label for="">Observaciones: </label>
+                <input id="textObservacion" [(ngModel)]="obser" name="obser" placeholder="ingrese una observación" class="form-control"  type="text"> 
+                <div class="container mt-5 text-right" style="margin-left: 10px" >
+                        <button (click)="aprovar()" class="btn btn-success mr-2" style="width: auto;"> Aprovar </button>
+                        <button type="button"   (click)="rechazar()" class="btn btn-danger mr-2" style="width: auto;"> Rechazar </button>
+                </div>
+        </div>
+        <div *ngIf="prospecto.estado =='r'" class="row mb-5" style="margin-left: 10px" >
+                <label for="">Observaciones: </label>
+                <input id="observacion" placeholder="{{prospecto.observacion}}" class="form-control"  type="text" readonly> 
+        </div>
+       
+
+    </div>
+
